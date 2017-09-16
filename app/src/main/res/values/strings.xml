@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Make Up My Mind</string>
+    <string name="picture_button">Take Picture</string>
+    <string name="first_question">Do you have acne?</string>
+    <string name="second_question">
+        Do you plan on working out
+        or engaging in serious physical activity with your makeup on?
+    </string>
+    <string name="yes_button">Yes</string>
+    <string name="no_button">No</string>
+    <string name="take_picture">Take Picture</string>
+    <string name="makeup_recommendations">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</string>
+</resources>
