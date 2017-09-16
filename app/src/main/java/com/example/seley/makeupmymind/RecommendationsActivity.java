@@ -3,6 +3,7 @@ import android.content.Intent;
 import android.content.ReceiverCallNotAllowedException;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Debug;
 import android.os.Environment;
 import android.os.StrictMode;
@@ -28,6 +29,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -39,6 +41,8 @@ public class RecommendationsActivity extends AppCompatActivity {
     static final int REQUEST_TAKE_PHOTO = 1;
     private AmazonS3 s3;
     Uri photoURI;
+    String imageFileName;
+    String answers = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,13 +50,18 @@ public class RecommendationsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_recommendations);
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
+        Intent intent = getIntent();
+        if (intent != null)
+        {
+            answers = intent.getStringExtra("answers");
+        }
         dispatchTakePictureIntent();
     }
 
     private File createImageFile() throws IOException {
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
+        imageFileName = answers + "_" + timeStamp + "_" + Build.SERIAL;
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
                 imageFileName,  /* prefix */
@@ -96,17 +105,16 @@ public class RecommendationsActivity extends AppCompatActivity {
 
     private void uploadToAmazon(final File imageFile) {
 
-        Log.d("HELP", imageFile.getPath());
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 try  {
 
-                    BasicAWSCredentials credentials = new BasicAWSCredentials("AKIAI7SFCLLG64HN6IAA", "dh5QSOXNjcrND3G25SIyhogIH2IsKCk+k7cTSKez");
+                    BasicAWSCredentials credentials = new BasicAWSCredentials("AKIAJ5OIYRGQH5W5LSLQ", "dI5le49eZzcoFIgeGK13ybFZp0UENAjafWctRMFs");
                     s3 = new AmazonS3Client(credentials);
                     PutObjectRequest objectRequest = new PutObjectRequest(
                             "make-up-your-mind",
-                            ".jpeg",
+                            imageFileName + ".jpg",
                             imageFile
                     );
                     PutObjectResult result = s3.putObject(objectRequest);
