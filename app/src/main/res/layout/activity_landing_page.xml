@@ -21,12 +21,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="55dp"
-        android:background="@color/pinkColor"
+        android:backgroundTint="@color/pinkColor"
         android:fontFamily="serif"
         android:padding="25dp"
         android:text="@string/picture_button"
         android:textAllCaps="false"
         android:textColor="@color/whiteColor"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+        android:background="@drawable/rounded_button"/>
 
 </LinearLayout>

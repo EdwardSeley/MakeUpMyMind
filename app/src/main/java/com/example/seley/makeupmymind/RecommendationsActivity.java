@@ -17,6 +17,7 @@ import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -78,7 +79,9 @@ public class RecommendationsActivity extends AppCompatActivity {
     String imageFileName;
     String answers = "";
     public TextView suggestionTextView;
+    public TextView websiteTextView;
     public static String suggestionText;
+    public static String websiteLinkText;
 
 
     @Override
@@ -93,6 +96,7 @@ public class RecommendationsActivity extends AppCompatActivity {
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
         suggestionTextView = (TextView) findViewById(R.id.suggestion);
+        websiteTextView = (TextView) findViewById(R.id.websiteLink);
         Intent intent = getIntent();
         if (intent != null)
         {
@@ -157,7 +161,7 @@ public class RecommendationsActivity extends AppCompatActivity {
             public void run() {
                 try  {
                     BasicAWSCredentials credentials = new BasicAWSCredentials
-                            ("AKIAINFEJ7ILDZ54XOOQ", "0q+Q3Ll2OSBjzPFG0dmJ4AfB0rmaB3QjseIOJjea");
+                            ("AKIAIQMNLYNZK5DTWQHA", "MjcRKnIYJFeB0ZsVk9/Xp9GCWHk8JaPBKJ7kgMhz");
                     s3 = new AmazonS3Client(credentials);
 
                     PutObjectRequest objectRequest = new PutObjectRequest(
@@ -191,9 +195,11 @@ public class RecommendationsActivity extends AppCompatActivity {
                         if (DownloadImage.fileExists)
                         {
                             suggestionTextView.setText(suggestionText);
+                            websiteTextView.setText(websiteLinkText);
+                            websiteTextView.setMovementMethod(LinkMovementMethod.getInstance());
                         }
                     }
-                }, 25000);
+                }, 28500);
             }
 
         });
@@ -209,7 +215,7 @@ public class RecommendationsActivity extends AppCompatActivity {
                         DownloadImage image = new DownloadImage();
                         image.execute(filePath);
                     }
-                }, 20000);   //20 seconds
+                }, 26500);   //20 seconds
 
 
             }
@@ -223,8 +229,8 @@ public class RecommendationsActivity extends AppCompatActivity {
 }
 
 class DownloadImage extends AsyncTask<String,String,String> {
-    private final String accessKey="AKIAINFEJ7ILDZ54XOOQ";
-    private final String secretKey="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";
+    private final String accessKey="AKIAIQMNLYNZK5DTWQHA";
+    private final String secretKey=" MjcRKnIYJFeB0ZsVk9/Xp9GCWHk8JaPBKJ7kgMhz";
     private final String bucketName="make-up-your-mind-response";
     private final String folderName="tmp";
     public String fileText;
@@ -237,12 +243,13 @@ class DownloadImage extends AsyncTask<String,String,String> {
         AmazonS3Client s3Client = new AmazonS3Client(new BasicAWSCredentials(accessKey,secretKey));
         GetObjectRequest objectRequest;
 
+        Log.d("HELP", fileName);
         if (s3Client.doesObjectExist(bucketName, fileName))
         {
             fileExists = true;
             Log.d("HELP", "object exists");
-            String accessKey="AKIAINFEJ7ILDZ54XOOQ";
-            String secretKey="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";
+            String accessKey="AKIAIQMNLYNZK5DTWQHA";
+            String secretKey="MjcRKnIYJFeB0ZsVk9/Xp9GCWHk8JaPBKJ7kgMhz";
             String bucketName="make-up-your-mind-response";
             s3Client = new AmazonS3Client(new BasicAWSCredentials(accessKey,secretKey));
             GetObjectRequest request = new GetObjectRequest(bucketName,
@@ -260,6 +267,13 @@ class DownloadImage extends AsyncTask<String,String,String> {
             Log.d("HELP", "Read Content: " + fileText);
 
             RecommendationsActivity.suggestionText = fileText;
+            if (fileText.contains("Website"))
+            {
+                int index = fileText.indexOf("Website: ");
+                RecommendationsActivity.websiteLinkText = (fileText.substring(index + 9, fileText.length()));
+                RecommendationsActivity.suggestionText = fileText.substring(0, index);
+            }
+
             return "";
 
         }

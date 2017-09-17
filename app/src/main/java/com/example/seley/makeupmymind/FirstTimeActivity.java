@@ -35,7 +35,7 @@ public class FirstTimeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mQuestion.setText(R.string.second_question);
-                userResponse[questionsAnswered] = 'y';
+                userResponse[questionsAnswered] = '1';
                 questionsAnswered++;
                 if (questionsAnswered==2)
                 {
@@ -50,7 +50,7 @@ public class FirstTimeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mQuestion.setText(R.string.second_question);
-                userResponse[questionsAnswered] = 'n';
+                userResponse[questionsAnswered] = '0';
                 questionsAnswered++;
                 if (questionsAnswered==2)
                 {

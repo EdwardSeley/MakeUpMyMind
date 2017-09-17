@@ -14,7 +14,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/makeup_recommendations"
-        android:textSize="18sp"
+        android:textSize="19sp"
         android:textAlignment="center"/>
+
+    <TextView
+        android:id="@+id/websiteLink"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="19sp"
+        android:textAlignment="center"
+        android:autoLink = "web"/>
 
 </LinearLayout>
