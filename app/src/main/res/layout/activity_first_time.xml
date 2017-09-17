@@ -6,13 +6,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center">
+    android:gravity="center"
+    android:background="@color/peachColor">
 
     <TextView
         android:id="@+id/question_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/first_question"
+        android:textSize="18dp"
         android:textAlignment="center"
         android:padding="15dp"/>
 
@@ -26,14 +28,24 @@
             android:id="@+id/yes_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:padding="4dp"
             android:text="@string/yes_button"
+            android:layout_margin="14dp"
+            android:backgroundTint="@color/pinkColor"
+            android:background="@drawable/rounded_button"
             />
 
         <Button
             android:id="@+id/no_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:padding="4dp"
             android:text="@string/no_button"
+            android:layout_margin="14dp"
+            android:backgroundTint="@color/pinkColor"
+            android:background="@drawable/rounded_button"
             />
 
     </LinearLayout>

@@ -6,13 +6,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center">
+    android:gravity="center"
+    android:background="@color/peachColor">
 
     <TextView
+        android:id="@+id/suggestion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/makeup_recommendations"
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:textAlignment="center"/>
 
 </LinearLayout>
